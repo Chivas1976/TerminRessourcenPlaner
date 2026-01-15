@@ -1,22 +1,255 @@
-html {
-  font-size: 14px;
+﻿/* =========================
+   GLOBAL
+   ========================= */
+
+:root {
+    --bg-main: #f6f3ef;
+    --card-bg: #ffffff;
+    --primary: #8b5e3c;
+    --primary-dark: #6f4528;
+    --accent: #c9a66b;
+    --text-main: #2f2a26;
+    --text-muted: #7a6f66;
 }
 
-@media (min-width: 768px) {
-  html {
+html {
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--bg-main);
+    color: var(--text-main);
+    margin-bottom: 60px;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+    }
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+    .btn-outline-primary:hover {
+        background-color: var(--primary);
+        color: #fff;
+    }
+
+/* =========================
+   DASHBOARD HERO
+   ========================= */
+
+.dashboard-hero {
+    background: linear-gradient(135deg, #8b5e3c, #c9a66b);
+    color: #ffffff;
+    border-radius: 18px;
+    padding: 28px;
+    margin-top: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+    .dashboard-hero h1 {
+        font-weight: 800;
+        margin-bottom: 4px;
+    }
+
+    .dashboard-hero .text-muted {
+        color: rgba(255,255,255,0.85) !important;
+    }
+
+/* =========================
+   KPI CARDS
+   ========================= */
+
+.kpi-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.kpi-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* =========================
+   SECTION CARDS
+   ========================= */
+
+.section-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    height: 100%;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* =========================
+   RESOURCE STATUS
+   ========================= */
+
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.resource-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.resource-name {
+    font-weight: 700;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-free {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-busy {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* =========================
+   TABLE CLEAN
+   ========================= */
+
+.table th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+}
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.feature-card {
+    background: var(--card-bg, #fff);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    border: 1px solid rgba(0,0,0,.06);
+    height: 100%;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+    .feature-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 30px rgba(0,0,0,.10);
+    }
+
+.feature-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.feature-title {
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: var(--text-main, #2f2a26);
+}
+
+.feature-text {
+    color: var(--text-muted, #7a6f66);
+    margin: 0;
+}
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.feature-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+    transition: transform .15s ease, box-shadow .15s ease;
+    height: 100%;
+}
+
+.card-link:hover .feature-card {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0,0,0,.10);
+}
+
+.feature-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.feature-title {
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.feature-text {
+    color: rgba(0,0,0,.65);
+    margin: 0;
+}
+/* =========================
+   FOOTER FIX (Buttons nicht überdecken)
+   ========================= */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 140px; /* mehr Platz, damit Footer nichts überlappt */
+}
+
+.footer {
+    position: static !important; /* Footer NICHT overlay/fixed */
+    width: 100%;
+    line-height: 60px;
 }

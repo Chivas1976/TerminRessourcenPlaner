@@ -19,6 +19,8 @@ namespace TerminRessourcenPlaner.Data
         public DbSet<Ressource> Ressourcen { get; set; }
         public DbSet<TerminRessource> TerminRessourcen { get; set; }
 
+        public DbSet<Dienstleistung> Dienstleistungen { get; set; }
+
         /// <summary>
         /// Konfiguration des Datenmodells (Beziehungen, Schlüssel)
         /// </summary>
@@ -26,19 +28,19 @@ namespace TerminRessourcenPlaner.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Zusammengesetzter Primärschlüssel für die n:m-Verknüpfung
             modelBuilder.Entity<TerminRessource>()
                 .HasKey(tr => new { tr.TerminId, tr.RessourceId });
 
             modelBuilder.Entity<TerminRessource>()
                 .HasOne(tr => tr.Termin)
-                .WithMany()
+                .WithMany(t => t.TerminRessourcen)
                 .HasForeignKey(tr => tr.TerminId);
 
             modelBuilder.Entity<TerminRessource>()
                 .HasOne(tr => tr.Ressource)
-                .WithMany()
+                .WithMany(r => r.TerminRessourcen)
                 .HasForeignKey(tr => tr.RessourceId);
         }
+    public DbSet<TerminRessourcenPlaner.Models.Dienstleistung> Dienstleistung { get; set; } = default!;
     }
 }

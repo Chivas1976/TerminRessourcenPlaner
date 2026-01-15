@@ -1,49 +1,103 @@
 ﻿@model TerminRessourcenPlaner.Models.Termin
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Termin bearbeiten";
+
+    var ressourcen = ViewBag.Ressourcen as List<TerminRessourcenPlaner.Models.Ressource>;
+    var ausgewaehlteIds = ViewBag.AusgewaehlteRessourcenIds as List<int>;
 }
 
-<h1>Edit</h1>
-
-<h4>Termin</h4>
+<h1>Termin bearbeiten</h1>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Titel" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Titel" class="form-label">Titel</label>
                 <input asp-for="Titel" class="form-control" />
                 <span asp-validation-for="Titel" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Start" class="control-label"></label>
-                <input asp-for="Start" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="Kundenname" class="form-label">Kundenname</label>
+                <input asp-for="Kundenname" class="form-control" />
+                <span asp-validation-for="Kundenname" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DienstleistungId" class="form-label">Dienstleistung</label>
+                <select asp-for="DienstleistungId"
+                        class="form-select"
+                        asp-items="@(ViewData["DienstleistungId"] as SelectList)">
+                    <option value="">Bitte auswählen</option>
+                </select>
+                <span asp-validation-for="DienstleistungId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Start" class="form-label">Start</label>
+                <input asp-for="Start" class="form-control" type="datetime-local"
+                       value="@Model.Start.ToString("yyyy-MM-ddTHH:mm")" />
                 <span asp-validation-for="Start" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Ende" class="control-label"></label>
-                <input asp-for="Ende" class="form-control" />
-                <span asp-validation-for="Ende" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label class="form-label">Ende (automatisch)</label>
+                <input class="form-control" readonly
+                       value="@Model.Ende.ToString("dd.MM.yyyy HH:mm")" />
             </div>
-            <div class="form-group">
-                <label asp-for="Beschreibung" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Beschreibung" class="form-label">Beschreibung</label>
                 <input asp-for="Beschreibung" class="form-control" />
                 <span asp-validation-for="Beschreibung" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <hr />
+            <h4>Mitarbeiter auswählen</h4>
+
+            @if (ressourcen != null && ressourcen.Any())
+            {
+                <div class="border rounded p-2 mb-2">
+                    @foreach (var r in ressourcen)
+                    {
+                        var istAusgewaehlt = ausgewaehlteIds != null && ausgewaehlteIds.Contains(r.Id);
+
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="selectedRessourcen"
+                                   value="@r.Id"
+                                   id="res_edit_@r.Id"
+                                   @(istAusgewaehlt ? "checked" : "") />
+                            <label class="form-check-label" for="res_edit_@r.Id">
+                                @r.Name
+                            </label>
+                        </div>
+                    }
+                </div>
+                <div class="form-text">Bereits zugewiesene Mitarbeiter sind vorausgewählt.</div>
+            }
+            else
+            {
+                <div class="text-muted">Keine Mitarbeiter vorhanden.</div>
+            }
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Speichern</button>
+                <a asp-action="Index" class="btn btn-secondary">Zurück zur Übersicht</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

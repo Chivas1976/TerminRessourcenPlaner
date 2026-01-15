@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Startseite";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-5">
+            <h1 class="display-6 fw-bold mb-2">Termin- & Ressourcenplanung</h1>
+            <p class="text-muted mb-4">
+                Verwalten Sie Termine, Mitarbeiter und Ressourcen übersichtlich und effizient.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-primary" asp-controller="Termine" asp-action="Index">
+                    Termine verwalten
+                </a>
+                <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Index">
+                    Tagesübersicht öffnen
+                </a>
+                <a class="btn btn-outline-secondary" asp-controller="Ressourcen" asp-action="Index">
+                    Ressourcen anzeigen
+                </a>
+                <a class="btn btn-success" asp-controller="Termine" asp-action="Create">
+                    Neuen Termin anlegen
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TerminRessourcenPlaner.Data;
 
 namespace TerminRessourcenPlaner
@@ -37,8 +37,8 @@ namespace TerminRessourcenPlaner
             app.UseAuthorization();
 
             app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

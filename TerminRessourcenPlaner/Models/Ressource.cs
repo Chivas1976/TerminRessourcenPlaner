@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TerminRessourcenPlaner.Models
 {
@@ -11,6 +12,9 @@ namespace TerminRessourcenPlaner.Models
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        public string Typ { get; set; } = string.Empty; // z.B. Raum oder Person
+        public string Typ { get; set; } = string.Empty;
+
+        // Navigation: Zuordnung Termin ↔ Ressource (n:m)
+        public ICollection<TerminRessource> TerminRessourcen { get; set; } = new List<TerminRessource>();
     }
 }

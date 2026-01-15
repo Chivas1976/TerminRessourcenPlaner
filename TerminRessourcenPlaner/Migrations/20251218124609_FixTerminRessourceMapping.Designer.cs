@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TerminRessourcenPlaner.Data;
 
@@ -11,9 +12,11 @@ using TerminRessourcenPlaner.Data;
 namespace TerminRessourcenPlaner.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251218124609_FixTerminRessourceMapping")]
+    partial class FixTerminRessourceMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,34 +24,6 @@ namespace TerminRessourcenPlaner.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("TerminRessourcenPlaner.Models.Dienstleistung", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Bezeichnung")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<int>("DauerInMinuten")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Kategorie")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<decimal?>("PreisInEuro")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Dienstleistung");
-                });
 
             modelBuilder.Entity("TerminRessourcenPlaner.Models.Ressource", b =>
                 {
@@ -82,16 +57,8 @@ namespace TerminRessourcenPlaner.Migrations
                     b.Property<string>("Beschreibung")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("DienstleistungId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Ende")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Kundenname")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("varchar(120)");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime(6)");
@@ -101,8 +68,6 @@ namespace TerminRessourcenPlaner.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DienstleistungId");
 
                     b.ToTable("Termine");
                 });
@@ -120,17 +85,6 @@ namespace TerminRessourcenPlaner.Migrations
                     b.HasIndex("RessourceId");
 
                     b.ToTable("TerminRessourcen");
-                });
-
-            modelBuilder.Entity("TerminRessourcenPlaner.Models.Termin", b =>
-                {
-                    b.HasOne("TerminRessourcenPlaner.Models.Dienstleistung", "Dienstleistung")
-                        .WithMany()
-                        .HasForeignKey("DienstleistungId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dienstleistung");
                 });
 
             modelBuilder.Entity("TerminRessourcenPlaner.Models.TerminRessource", b =>

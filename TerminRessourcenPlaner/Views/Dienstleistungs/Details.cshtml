@@ -1,0 +1,42 @@
+﻿@model TerminRessourcenPlaner.Models.Dienstleistung
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Dienstleistung</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Bezeichnung)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Bezeichnung)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DauerInMinuten)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DauerInMinuten)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PreisInEuro)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PreisInEuro)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kategorie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kategorie)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

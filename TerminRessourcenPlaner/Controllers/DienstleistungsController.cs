@@ -10,22 +10,22 @@ using TerminRessourcenPlaner.Models;
 
 namespace TerminRessourcenPlaner.Controllers
 {
-    public class RessourcenController : Controller
+    public class DienstleistungsController : Controller
     {
         private readonly AppDbContext _context;
 
-        public RessourcenController(AppDbContext context)
+        public DienstleistungsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Ressourcen
+        // GET: Dienstleistungs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ressourcen.ToListAsync());
+            return View(await _context.Dienstleistung.ToListAsync());
         }
 
-        // GET: Ressourcen/Details/5
+        // GET: Dienstleistungs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,43 +33,39 @@ namespace TerminRessourcenPlaner.Controllers
                 return NotFound();
             }
 
-            var ressource = await _context.Ressourcen
-                .Include(r => r.TerminRessourcen)
-                    .ThenInclude(tr => tr.Termin)
-                .FirstOrDefaultAsync(r => r.Id == id);
-
-            if (ressource == null)
+            var dienstleistung = await _context.Dienstleistung
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (dienstleistung == null)
             {
                 return NotFound();
             }
 
-            return View(ressource);
+            return View(dienstleistung);
         }
 
-        // GET: Ressourcen/Create
+        // GET: Dienstleistungs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Ressourcen/Create
+        // POST: Dienstleistungs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Typ")] Ressource ressource)
+        public async Task<IActionResult> Create([Bind("Id,Bezeichnung,DauerInMinuten,PreisInEuro,Kategorie")] Dienstleistung dienstleistung)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ressource);
+                _context.Add(dienstleistung);
                 await _context.SaveChangesAsync();
-                TempData["Success"] = "Ressource wurde erfolgreich gespeichert.";
                 return RedirectToAction(nameof(Index));
             }
-            return View(ressource);
+            return View(dienstleistung);
         }
 
-        // GET: Ressourcen/Edit/5
+        // GET: Dienstleistungs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +73,22 @@ namespace TerminRessourcenPlaner.Controllers
                 return NotFound();
             }
 
-            var ressource = await _context.Ressourcen.FindAsync(id);
-            if (ressource == null)
+            var dienstleistung = await _context.Dienstleistung.FindAsync(id);
+            if (dienstleistung == null)
             {
                 return NotFound();
             }
-            return View(ressource);
+            return View(dienstleistung);
         }
 
-        // POST: Ressourcen/Edit/5
+        // POST: Dienstleistungs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Typ")] Ressource ressource)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Bezeichnung,DauerInMinuten,PreisInEuro,Kategorie")] Dienstleistung dienstleistung)
         {
-            if (id != ressource.Id)
+            if (id != dienstleistung.Id)
             {
                 return NotFound();
             }
@@ -101,12 +97,12 @@ namespace TerminRessourcenPlaner.Controllers
             {
                 try
                 {
-                    _context.Update(ressource);
+                    _context.Update(dienstleistung);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RessourceExists(ressource.Id))
+                    if (!DienstleistungExists(dienstleistung.Id))
                     {
                         return NotFound();
                     }
@@ -115,13 +111,12 @@ namespace TerminRessourcenPlaner.Controllers
                         throw;
                     }
                 }
-                TempData["Success"] = "Ressource wurde erfolgreich aktualisiert.";
                 return RedirectToAction(nameof(Index));
             }
-            return View(ressource);
+            return View(dienstleistung);
         }
 
-        // GET: Ressourcen/Delete/5
+        // GET: Dienstleistungs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,35 +124,34 @@ namespace TerminRessourcenPlaner.Controllers
                 return NotFound();
             }
 
-            var ressource = await _context.Ressourcen
+            var dienstleistung = await _context.Dienstleistung
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (ressource == null)
+            if (dienstleistung == null)
             {
                 return NotFound();
             }
 
-            return View(ressource);
+            return View(dienstleistung);
         }
 
-        // POST: Ressourcen/Delete/5
+        // POST: Dienstleistungs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ressource = await _context.Ressourcen.FindAsync(id);
-            if (ressource != null)
+            var dienstleistung = await _context.Dienstleistung.FindAsync(id);
+            if (dienstleistung != null)
             {
-                _context.Ressourcen.Remove(ressource);
+                _context.Dienstleistung.Remove(dienstleistung);
             }
 
             await _context.SaveChangesAsync();
-            TempData["Success"] = "Ressource wurde erfolgreich gelöscht.";
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RessourceExists(int id)
+        private bool DienstleistungExists(int id)
         {
-            return _context.Ressourcen.Any(e => e.Id == id);
+            return _context.Dienstleistung.Any(e => e.Id == id);
         }
     }
 }
